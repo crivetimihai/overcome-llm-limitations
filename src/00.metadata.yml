@@ -1,0 +1,35 @@
+---
+title: "Practical GenAI: Understanding Large Language Models (LLMs)"
+subtitle: "10 Limitations of LLMs and mitigation options"
+author:
+- "Mihai Criveti, Principal Architect, CKA, RHCA III"
+date: \today
+
+abstract: |
+  Mihai will share lessons learned building Retrieval Augmented Generation, or “Chat with Documents” platforms and APIs that scale, and deploy on Kubernetes. His talk will cover use cases for Generative AI, limitations of Large Language Models, use of RAG, Vector Databases and Fine Tuning to overcome model limitations and build solutions that connect to your data and provide content grounding, limit hallucinations and form the basis of explainable AI. In terms of technology, he will cover LLAMA2, HuggingFace TGIS, SentenceTransformers embedding models using Python, LangChain, and Weaviate and ChromaDB vector databases. He’ll also share tips on writing code using LLM, including building an agent for Ansible and containers.
+keywords: rag, ai, llm, kubernetes, genai
+description: |
+  Retrieval Augmented Generation
+subject: AI, LLM, GenAI
+category: presentation
+lang: en-US
+
+output: beamer_presentation
+aspectratio: "169"
+toc: true
+slide_level: 2
+incremental: false # Incremental bullets
+classoption: "aspectratio=169"
+dpi: 300
+
+theme: "metropolis"
+colortheme: "rose"
+fonttheme: "professionalfonts"
+fontsize: 9pt
+monofontoptions: 'Mapping=tex-ansi,Scale=0.5'
+highlight: tango
+
+logo: ./template/logo.png
+titlegraphic: ./template/frontpage.png
+section-titles: true
+---

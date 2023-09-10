@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Mihai Criveti
+# Build presentations and output files using pandoc
+#TRANSFORMATION="pdf pptx docx"
+
+echo $TRANSFORMATION
+
+usage(){
+  echo "Usage: TRANSFORMATION='pdf pptx docx' genbeamer Directory-With-My-Presentation"
+  exit 1
+}
+
+[ -d "$1" ] || usage
+
+# Author: Mihai Criveti
+BUILD_TARGET=$(basename $1)
+BUILD_NAME=$(basename $PWD)
+BUILT_TYPE="book"
+TITLE="Mihai-Criveti-${BUILD_NAME}"
+PANDOC="pandoc"
+#PANDOC="docker run -v $PWD/img:/img -v $HOME/.fonts:/root/.fonts -v $PWD/template:/template -v $PWD/out:/out -v $PWD/$BUILD_TARGET:/$BUILD_TARGET cmihai/pandoc pandoc"
+
+# Create out directory if it doest not exist
+[ -d out ] || mkdir -p out
+
+
+build_pdf() {
+  echo ">>> Starting to build pdf beamer..."
+  ${PANDOC} -s -t beamer \
+    --dpi 300 \
+    -V colorlinks -V linkcolor=Cerulean -V urlcolor=Cerulean \
+    --slide-level=2 --pdf-engine=xelatex \
+    --template=template/presentation.latex \
+    ${BUILD_TARGET}/00.metadata.yml \
+    ${BUILD_TARGET}/[0-9]*.md \
+    -o "out/${TITLE}.pdf"
+    echo "[X] Finished building pdf beamer"
+}
+
+
+build_pptx() {
+  echo ">>> Starting build: pptx.."
+  ${PANDOC} -s -t pptx \
+    --reference-doc template/reference.pptx \
+    -V colorlinks -V linkcolor=Cerulean -V urlcolor=Cerulean \
+    --highlight-style=breezeDark \
+    --slide-level=2 \
+    ${BUILD_TARGET}/00.metadata.yml \
+    ${BUILD_TARGET}/[0-9]*.md \
+    -o "out/${TITLE}.pptx"
+  echo "[X] Finished build: pptx"
+}
+
+
+build_docx() {
+  echo ">>> Starting build: docx.."
+  ${PANDOC} -s -t docx \
+    --reference-doc template/reference.docx \
+    -V colorlinks -V linkcolor=Cerulean -V urlcolor=Cerulean \
+    ${BUILD_TARGET}/00.metadata.yml \
+    ${BUILD_TARGET}/[0-9]*.md \
+    -o "out/${TITLE}.docx"
+  echo "[X] Finished build: docx"
+}
+
+for transf in ${TRANSFORMATION}
+do
+  build_${transf}
+done
